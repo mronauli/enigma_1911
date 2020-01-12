@@ -9,12 +9,6 @@ class KeyTest < Minitest::Test
     assert_instance_of Key, key
   end
 
-  def test_random_numbers_array
-    key = Key.new
-    random_numbers = mock([1, 2, 3, 34])
-    assert_equal random_numbers, key.numbers
-  end
-
   def test_no_numbers_are_double_digits
     key = Key.new
     key.numbers.each do |key|
