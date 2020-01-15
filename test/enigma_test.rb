@@ -74,11 +74,10 @@ class KeyTest < Minitest::Test
 
   def test_can_encrypt_message_with_random_key_and_todays_date
     enigma = Enigma.new
-    key = Key.new
-    key.stub(:numbers, "20667") do
-      assert_equal("20667", key.numbers)
+    expected_key = Key.new("20667")
+    Enigma.stub :encrypt, Key.new("20667") do
     expected = ({:encryption=>"eoxyljhaovp", :key=>"20667", :date=>"150120"})
     assert_equal expected, enigma.encrypt("hello world")
-  end
+    end
   end
 end
