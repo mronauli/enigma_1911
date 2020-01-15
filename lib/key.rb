@@ -1,7 +1,12 @@
 class Key
   attr_accessor :numbers
-  def initialize
-    @numbers = Array.new(5){rand(10)}
+  def initialize(numbers = nil)
+    @numbers = numbers
+    if numbers == nil
+      @numbers = Array.new(5){rand(10)}
+    else
+      @numbers = numbers.chars
+    end
   end
 
   def combine
