@@ -1,3 +1,7 @@
+require './lib/key'
+require './lib/offset'
+require './lib/shift'
+
 class Enigma
   attr_reader :alphabet
   def initialize
