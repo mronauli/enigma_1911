@@ -32,7 +32,7 @@ class KeyTest < Minitest::Test
     assert_instance_of Offset, offset
     assert_instance_of Shift, shift
   end
-  
+
   def test_decrypt
     enigma = Enigma.new
     my_key = Key.new
@@ -46,5 +46,35 @@ class KeyTest < Minitest::Test
   def test_enigma_can_encrypt
     enigma = Enigma.new
     assert_equal ({:encryption=>"keder ohulw!", :key=>"02715", :date=>"040895"}), enigma.encrypt("Hello world!", "02715", "040895")
+  end
+
+  def test_enigma_can_decrypt
+    enigma = Enigma.new
+    expected = {:decryption=>"hello world!", :key=>"02715", :date=>"040895"}
+    assert_equal expected, enigma.decrypt("keder ohulw!", "02715", "040895")
+  end
+
+  def test_can_encrypt_if_no_key_is_passed_in
+    enigma = Enigma.new
+    refute_equal ({:encryption=>"keder ohulw!", :key=>"02715", :date=>"040895"}), enigma.encrypt("Hello world!", "040895")
+  end
+
+  def test_if_no_date_is_given_can_encrypt_with_todays_date
+    enigma = Enigma.new
+    expected = {:encryption=>"xescd cfglk!", :key=>"12345", :date=>"150120"}
+    assert_equal expected, enigma.encrypt("Hello world!", "12345")
+  end
+
+  def test_can_decrypt_with_todays_date
+    enigma = Enigma.new
+    enigma.stubs(:encryption).returns("visldjfw")
+    expected = {decryption: "hello world", key: "140120", date: "040895"}
+    assert_equal expected, enigma.decrypt(encrypted[:encryption], "02715")
+  end
+
+  def test_can_encrypt_message_with_random_key_and_todays_date
+    enigma = Enigma.new
+    expected = ({:encryption=>"xescd cfglk", :key=>"12345", :date=>"150120"})
+    assert_equal expected, enigma.encrypt("hello world")
   end
 end
