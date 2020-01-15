@@ -32,7 +32,7 @@ class KeyTest < Minitest::Test
     assert_instance_of Offset, offset
     assert_instance_of Shift, shift
   end
-
+  
   def test_decrypt
     enigma = Enigma.new
     my_key = Key.new
@@ -41,5 +41,10 @@ class KeyTest < Minitest::Test
     assert_instance_of Key, my_key
     assert_instance_of Offset, offset
     assert_instance_of Shift, shift
+  end
+
+  def test_enigma_can_encrypt
+    enigma = Enigma.new
+    assert_equal ({:encryption=>"keder ohulw!", :key=>"02715", :date=>"040895"}), enigma.encrypt("Hello world!", "02715", "040895")
   end
 end
