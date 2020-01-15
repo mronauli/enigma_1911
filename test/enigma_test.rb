@@ -67,14 +67,18 @@ class KeyTest < Minitest::Test
 
   def test_can_decrypt_with_todays_date
     enigma = Enigma.new
-    enigma.stubs(:encryption).returns("visldjfw")
-    expected = {decryption: "hello world", key: "140120", date: "040895"}
-    assert_equal expected, enigma.decrypt(encrypted[:encryption], "02715")
+    enigma.stubs(:encryption).returns("xescd cfglk!")
+    expected = {decryption: "hello world!", key: "12345", date: "150120"}
+    assert_equal expected, enigma.decrypt("xescd cfglk!", "12345")
   end
 
   def test_can_encrypt_message_with_random_key_and_todays_date
     enigma = Enigma.new
-    expected = ({:encryption=>"xescd cfglk", :key=>"12345", :date=>"150120"})
+    key = Key.new
+    key.stub(:numbers, "20667") do
+      assert_equal("20667", key.numbers)
+    expected = ({:encryption=>"eoxyljhaovp", :key=>"20667", :date=>"150120"})
     assert_equal expected, enigma.encrypt("hello world")
+  end
   end
 end
